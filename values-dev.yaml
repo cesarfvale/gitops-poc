@@ -1,0 +1,35 @@
+fullnameOverride: postgis
+
+architecture: standalone
+auth:
+  postgresPassword: "postgres123"
+  username: "admin"
+  password: "admin123"
+  database: "gisdb"
+
+primary:
+  initdb:
+    scripts:
+      enable-postgis.sql: |
+        CREATE EXTENSION IF NOT EXISTS postgis;
+        CREATE EXTENSION IF NOT EXISTS postgis_topology;
+        CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+        CREATE EXTENSION IF NOT EXISTS postgis_raster;
+
+extraEnv:
+  - name: POSTGRES_SHARED_BUFFERS
+    value: "256MB"
+  - name: POSTGRES_WORK_MEM
+    value: "64MB"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+persistence:
+  enabled: true
+  size: 10Gi

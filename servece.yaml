@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgis-svc
+  labels:
+    app: postgis
+spec:
+  type: ClusterIP
+  selector:
+    app: postgis
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  
